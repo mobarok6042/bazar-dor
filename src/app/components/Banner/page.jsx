@@ -12,7 +12,7 @@ const BannerPage = () => {
                     <p className="mt-4 max-w-xl text-sm leading-7 text-base-content/75 sm:text-base sm:leading-8">
                         চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
                     </p>
-                    <Link href="/products" className="btn mt-6 bg-[#047F39] text-white hover:bg-[#036b30]">
+                    <Link href="#all-products" className="btn mt-6 bg-[#047F39] text-white hover:bg-[#036b30]">
                         সব পণ্য দেখুন
                     </Link>
                 </div>

@@ -39,9 +39,9 @@ const ProductCard = ({ product }) => {
   );
 };
 
-const ProductGroup = ({ title, products }) =>
+const ProductGroup = ({ title, products, id }) =>
   products.length > 0 && (
-    <section aria-label={title}>
+    <section aria-label={title} id={id} className={id ? "scroll-mt-6" : undefined}>
       <h3 className="mb-4 text-xl font-semibold sm:text-2xl">{title}</h3>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => (
@@ -100,6 +100,7 @@ const ProductCards = async () => {
       <ProductGroup
         title={`মত (${products.length}টি) পন্য দেখানো হচ্ছে`}
         products={products}
+        id="all-products"
       />
     </div>
   );

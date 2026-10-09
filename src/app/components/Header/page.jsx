@@ -2,6 +2,7 @@
 
 import { Suspense } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { connection } from 'next/server';
 import NavlinksPage from '../page';
 import MarqueePage from '../Marquee/page';
@@ -22,9 +23,9 @@ const HeaderPage = () => {
     return (
         <header className="w-full border-b border-gray-200">
             <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4 lg:px-8">
-                <div className="flex min-w-0 items-center gap-3">
+                <Link href="/" aria-label="বাজার দর হোমপেজ" className="flex min-w-0 items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#047F39]">
                     <Image
-                        alt="বাজার দর"
+                        alt=""
                         src="/logo-icon.png"
                         width={50}
                         height={50}
@@ -36,14 +37,14 @@ const HeaderPage = () => {
                             <CurrentDate />
                         </Suspense>
                     </div>
-                </div>
+                </Link>
                 <nav aria-label="Account" className="flex items-center justify-end gap-2 sm:gap-3">
-                    <a href="/sign-in" className="btn btn-outline">
+                    <Link href="/sign-in" className="btn btn-outline">
                         Sign In
-                    </a>
-                    <a href="/sign-up" className="btn bg-[#047F39]">
+                    </Link>
+                    <Link href="/sign-up" className="btn bg-[#047F39]">
                         Sign Up
-                    </a>
+                    </Link>
                 </nav>
             </div>
             <NavlinksPage />
