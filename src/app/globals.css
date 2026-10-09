@@ -8,7 +8,7 @@
 }
 
 .product-marquee__track {
-  animation: product-marquee-scroll 32s linear infinite;
+  animation: product-marquee-scroll 100s linear infinite;
 }
 
 .product-marquee:hover .product-marquee__track {

@@ -1,6 +1,6 @@
 import { Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
-import NavbarPage from "./components/Navbar/page";
+
 import HeaderPage from "./components/Header/page";
 
 const notoSansBengali = Noto_Sans_Bengali({

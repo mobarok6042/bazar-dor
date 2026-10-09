@@ -1,6 +1,10 @@
+import BannerPage from "./components/Banner/page";
+
 const page = () => {
   return (
-    <div />
+    <main>
+      <BannerPage></BannerPage>
+    </main>
   );
 };
 
