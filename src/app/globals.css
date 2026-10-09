@@ -1,3 +1,22 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@keyframes product-marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.product-marquee__track {
+  animation: product-marquee-scroll 32s linear infinite;
+}
+
+.product-marquee:hover .product-marquee__track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-marquee__track {
+    animation: none;
+  }
+}

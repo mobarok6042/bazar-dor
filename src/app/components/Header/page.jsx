@@ -1,14 +1,24 @@
-"use client"
 
-import React from 'react';
+
+import { Suspense } from 'react';
 import Image from 'next/image';
+import { connection } from 'next/server';
+import NavlinksPage from '../page';
+import MarqueePage from '../Marquee/page';
 
-const HeaderPage = () => {
-    const date = new Date().toLocaleDateString("bn-bd",
+const CurrentDate = async () => {
+    await connection();
+
+    const date = new Date().toLocaleDateString("bn-BD",
         {
             dateStyle:"full"
         }
     )
+
+    return <p className="text-sm text-gray-600">{date}</p>;
+};
+
+const HeaderPage = () => {
     return (
         <header className="w-full border-b border-gray-200">
             <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4 lg:px-8">
@@ -22,24 +32,22 @@ const HeaderPage = () => {
                     />
                     <div className="min-w-0">
                         <h1 className="text-xl font-bold leading-tight sm:text-2xl">বাজার দর</h1>
-                        <p className="text-sm text-gray-600">{date}</p>
+                        <Suspense fallback={<p className="h-5" aria-hidden="true" />}>
+                            <CurrentDate />
+                        </Suspense>
                     </div>
                 </div>
                 <nav aria-label="Account" className="flex items-center justify-end gap-2 sm:gap-3">
-                    <a
-                        href="/sign-in"
-                        className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                    >
-                        সাইন ইন
+                    <a href="/sign-in" className="btn btn-outline">
+                        Sign In
                     </a>
-                    <a
-                        href="/sign-up"
-                        className="rounded-md bg-[#047F39] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 "
-                    >
-                        সাইন আপ
+                    <a href="/sign-up" className="btn bg-[#047F39]">
+                        Sign Up
                     </a>
                 </nav>
             </div>
+            <NavlinksPage />
+            <MarqueePage />
         </header>
     );
 };
