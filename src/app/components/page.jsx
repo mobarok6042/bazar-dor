@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import CategoryNavLinks from './CategoryNavLinks';
 
 const CategoryLinks = async () => {
     const response = await fetch("https://api.api-store.workers.dev/api/bazardor/categories");
@@ -15,22 +14,13 @@ const CategoryLinks = async () => {
         throw new Error("Invalid categories response: expected an array");
     }
 
-    return (
-        <nav aria-label="Categories" className="mx-auto flex flex-wrap justify-center gap-4 px-4 pb-3 text-center sm:px-6 lg:px-8">
-            {navs.map((nav) => {
-                if (typeof nav.slug !== "string" || typeof nav.nameBn !== "string") {
-                    throw new Error("Invalid category entry: each category must include a slug and nameBn");
-                }
+    for (const nav of navs) {
+        if (typeof nav.slug !== "string" || typeof nav.nameBn !== "string") {
+            throw new Error("Invalid category entry: each category must include a slug and nameBn");
+        }
+    }
 
-                return (
-                    <Link href={`/${nav.slug}`} key={nav.id ?? nav.slug} className="link link-hover inline-flex items-center gap-1">
-                        {nav.icon && <span aria-hidden="true">{nav.icon}</span>}
-                        <span>{nav.nameBn}</span>
-                    </Link>
-                );
-            })}
-        </nav>
-    );
+    return <CategoryNavLinks categories={navs} />;
 };
 
 const NavlinksPage = () => (

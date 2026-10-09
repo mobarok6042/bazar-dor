@@ -26,7 +26,7 @@ const ProductMarquee = async () => {
                 const isUp = good.change.dir === "up";
                 const isDown = good.change.dir === "down";
                 const changeSign = isUp ? "+" : isDown ? "-" : "";
-                const changeColor = isUp ? "text-success" : isDown ? "text-error" : "";
+                const changeColor = isUp ? "text-error" : isDown ? "text-success" : "";
 
                 return (
                     <div key={good.id} className="flex shrink-0 items-center gap-3 rounded-lg border border-base-300 px-4 py-2">
