@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import ProductCard from "./ProductCard";
+import { HomeProductSkeleton } from "./ProductGridSkeleton";
 
 export const metadata = {
   title: "সব পণ্য",
@@ -75,7 +76,7 @@ const ProductCards = async () => {
 
 const ProductsPage = () => (
   <section className="mx-auto w-full max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-    <Suspense fallback={<div aria-hidden="true" className="h-64" />}>
+    <Suspense fallback={<HomeProductSkeleton />}>
       <ProductCards />
     </Suspense>
   </section>

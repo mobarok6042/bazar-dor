@@ -3,6 +3,7 @@ import "./globals.css";
 
 import HeaderPage from "./components/Header/page";
 import ToastProvider from "./components/ToastProvider";
+import FooterPage from "./components/Footer/page";
 
 const notoSansBengali = Noto_Sans_Bengali({
   subsets: ["latin","bengali"],
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
         <ToastProvider />
         <HeaderPage></HeaderPage>
         {children}
+        <FooterPage />
         </body>
     </html>
   );

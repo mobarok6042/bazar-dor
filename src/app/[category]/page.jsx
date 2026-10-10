@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import CategoryProductList from "../components/Products/CategoryProductList";
+import { CategoryProductSkeleton } from "../components/Products/ProductGridSkeleton";
 
 export const metadata = {
   title: "পণ্যের বিভাগ",
@@ -65,7 +66,7 @@ const CategoryContent = async ({ params }) => {
 
 const CategoryPage = ({ params }) => (
   <main>
-    <Suspense fallback={<div aria-hidden="true" className="h-96" />}>
+    <Suspense fallback={<CategoryProductSkeleton />}>
       <CategoryContent params={params} />
     </Suspense>
   </main>
