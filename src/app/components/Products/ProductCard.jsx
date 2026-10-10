@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const ProductCard = ({ product }) => {
   const isUp = product.change.dir === "up";
   const isDown = product.change.dir === "down";
@@ -5,7 +7,11 @@ const ProductCard = ({ product }) => {
   const changeColor = isUp ? "text-error" : isDown ? "text-success" : "";
 
   return (
-    <article className="card border border-base-300 bg-base-100 shadow-sm">
+    <Link
+      href={`/product/${product.slug}`}
+      className="card border border-base-300 bg-base-100 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#047F39]"
+      aria-label={`${product.nameBn}, আজকের দাম ৳${product.today}`}
+    >
       <div className="card-body gap-2 p-5">
         <div className="flex items-center gap-2 text-lg font-semibold sm:text-xl">
           {product.categoryIcon && (
@@ -31,7 +37,7 @@ const ProductCard = ({ product }) => {
           </span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 };
 

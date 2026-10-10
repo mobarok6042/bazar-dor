@@ -13,10 +13,14 @@ export const auth = betterAuth({
         enabled: true,
     },
     socialProviders: {
-        google: { 
-            clientId: process.env.GOOGLE_ID, 
-            clientSecret: process.env.GOOGLE_SECRET, 
-        }, 
+        google: {
+            clientId: process.env.GOOGLE_ID,
+            clientSecret: process.env.GOOGLE_SECRET,
+        },
+        github: {
+            clientId: process.env.GITHUB_ID,
+            clientSecret: process.env.GITHUB_SECRET,
+        },
     },
 
     database: mongodbAdapter(db, {

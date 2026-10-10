@@ -41,6 +41,7 @@ const CategoryContent = async ({ params }) => {
   for (const product of categoryProducts) {
     if (
       (typeof product.id !== "string" && typeof product.id !== "number") ||
+      typeof product.slug !== "string" ||
       typeof product.nameBn !== "string" ||
       typeof product.today !== "number" ||
       typeof product.unit !== "string" ||

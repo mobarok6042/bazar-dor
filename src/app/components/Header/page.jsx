@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { connection } from 'next/server';
 import NavlinksPage from '../page';
 import MarqueePage from '../Marquee/page';
+import AccountMenu from './AccountMenu';
 
 const CurrentDate = async () => {
     await connection();
@@ -38,14 +39,7 @@ const HeaderPage = () => {
                         </Suspense>
                     </div>
                 </Link>
-                <nav aria-label="Account" className="flex items-center justify-end gap-2 sm:gap-3">
-                    <Link href="/sign-in" className="btn btn-outline">
-                        Sign In
-                    </Link>
-                    <Link href="/sign-up" className="btn bg-[#047F39]">
-                        Sign Up
-                    </Link>
-                </nav>
+                <AccountMenu />
             </div>
             <NavlinksPage />
             <MarqueePage />
