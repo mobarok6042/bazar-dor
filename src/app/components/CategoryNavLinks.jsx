@@ -8,7 +8,7 @@ const CategoryNavLinks = ({ categories }) => {
 
   return (
     <nav
-      aria-label="Categories"
+      aria-label="পণ্যের বিভাগ"
       className="mx-auto flex flex-wrap justify-center gap-2 px-4 pb-3 text-center sm:px-6 lg:px-8"
     >
       {categories.map((category) => {
@@ -22,7 +22,7 @@ const CategoryNavLinks = ({ categories }) => {
             className={`inline-flex items-center gap-1 rounded-md px-3 py-1.5 transition-colors ${
               isActive
                 ? "bg-[#047F39] text-white"
-                : "link link-hover"
+                : "border border-[#047F39] bg-white font-semibold text-[#006b2f] hover:bg-[#e6f4eb]"
             }`}
           >
             {category.icon && (

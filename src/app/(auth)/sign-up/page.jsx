@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import {
   Button,
   Description,
@@ -15,15 +16,13 @@ import { signIn, signUp } from "@/lib/auth-client";
 import SocialAuthButtons from "../SocialAuthButtons";
 
 const SignUpPage = () => {
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
+    setIsSubmitting(true);
 
     try {
       const { error } = await signUp.email({
@@ -33,25 +32,26 @@ const SignUpPage = () => {
       });
 
       if (error) {
-        setErrorMessage(error.message || "Unable to create your account.");
+        toast.error("অ্যাকাউন্ট তৈরি করা যায়নি। তথ্যগুলো যাচাই করে আবার চেষ্টা করুন।");
         return;
       }
 
-      setSuccessMessage("Your account has been created successfully.");
+      toast.success("আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।");
     } catch {
-      setErrorMessage("Unable to create your account. Please try again.");
+      toast.error("অ্যাকাউন্ট তৈরি করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleSocialSignIn = async (provider) => {
-    setErrorMessage("");
     try {
       const { error } = await signIn.social({ provider });
       if (error) {
-        setErrorMessage(error.message || `Unable to continue with ${provider}.`);
+        toast.error("সামাজিক অ্যাকাউন্ট দিয়ে চালিয়ে যাওয়া যায়নি। আবার চেষ্টা করুন।");
       }
     } catch {
-      setErrorMessage(`Unable to continue with ${provider}. Please try again.`);
+      toast.error("সামাজিক অ্যাকাউন্ট দিয়ে চালিয়ে যাওয়া যায়নি। আবার চেষ্টা করুন।");
     }
   };
 
@@ -60,9 +60,9 @@ const SignUpPage = () => {
       <section className="card w-full max-w-md border border-base-300 bg-base-100 shadow-xl">
         <div className="card-body gap-5 p-6 sm:p-8">
           <div className="text-center">
-            <h1 className="text-3xl font-bold tracking-tight">Create your account</h1>
+            <h1 className="text-3xl font-bold tracking-tight">আপনার অ্যাকাউন্ট তৈরি করুন</h1>
             <p className="mt-2 text-sm text-base-content/65">
-              Sign up to get started with Bazar Dor.
+              বাজার দর ব্যবহার শুরু করতে নিবন্ধন করুন।
             </p>
           </div>
 
@@ -71,11 +71,11 @@ const SignUpPage = () => {
               isRequired
               name="name"
               validate={(value) =>
-                value.length < 3 ? "Name must be at least 3 characters" : null
+                value.length < 3 ? "নাম কমপক্ষে ৩ অক্ষরের হতে হবে" : null
               }
             >
-              <Label>Name</Label>
-              <Input autoComplete="name" placeholder="John Doe" />
+              <Label>নাম</Label>
+              <Input autoComplete="name" placeholder="আপনার নাম লিখুন" />
               <FieldError />
             </TextField>
             <TextField
@@ -85,11 +85,11 @@ const SignUpPage = () => {
               validate={(value) =>
                 /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
                   ? null
-                  : "Please enter a valid email address"
+                  : "সঠিক ইমেইল ঠিকানা লিখুন"
               }
             >
-              <Label>Email</Label>
-              <Input autoComplete="email" placeholder="john@example.com" />
+              <Label>ইমেইল</Label>
+              <Input autoComplete="email" placeholder="আপনার ইমেইল লিখুন" />
               <FieldError />
             </TextField>
             <TextField
@@ -98,23 +98,21 @@ const SignUpPage = () => {
               name="password"
               type="password"
               validate={(value) => {
-                if (value.length < 8) return "Password must be at least 8 characters";
-                if (!/[A-Z]/.test(value)) return "Password must contain at least one uppercase letter";
-                if (!/[0-9]/.test(value)) return "Password must contain at least one number";
+                if (value.length < 8) return "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে";
+                if (!/[A-Z]/.test(value)) return "পাসওয়ার্ডে অন্তত একটি বড় হাতের ইংরেজি অক্ষর থাকতে হবে";
+                if (!/[0-9]/.test(value)) return "পাসওয়ার্ডে অন্তত একটি সংখ্যা থাকতে হবে";
                 return null;
               }}
             >
-              <Label>Password</Label>
-              <Input autoComplete="new-password" placeholder="Create a password" />
+              <Label>পাসওয়ার্ড</Label>
+              <Input autoComplete="new-password" placeholder="পাসওয়ার্ড তৈরি করুন" />
               <Description>
-                At least 8 characters, including one uppercase letter and one number.
+                কমপক্ষে ৮ অক্ষর, একটি বড় হাতের ইংরেজি অক্ষর ও একটি সংখ্যা দিন।
               </Description>
               <FieldError />
             </TextField>
-            {errorMessage && <p role="alert" className="text-sm text-error">{errorMessage}</p>}
-            {successMessage && <p role="status" className="text-sm text-success">{successMessage}</p>}
-            <Button type="submit" className="w-full">
-              Create account
+            <Button type="submit" isDisabled={isSubmitting} className="w-full bg-[#047F39] font-semibold text-white hover:bg-[#035f2b]">
+              {isSubmitting ? "অ্যাকাউন্ট তৈরি হচ্ছে..." : "অ্যাকাউন্ট তৈরি করুন"}
             </Button>
           </Form>
 
@@ -123,10 +121,10 @@ const SignUpPage = () => {
             onGithubSignIn={() => handleSocialSignIn("github")}
           />
 
-          <p className="text-center text-sm text-base-content/70">
-            Already a user?{" "}
-            <Link href="/sign-in" className="font-semibold text-[#047F39] hover:underline">
-              Sign in
+          <p className="text-center text-sm text-base-content">
+            আগে থেকেই অ্যাকাউন্ট আছে?{" "}
+            <Link href="/sign-in" className="font-bold text-[#006b2f] underline decoration-2 underline-offset-4 hover:text-[#004d22]">
+              সাইন ইন করুন
             </Link>
           </p>
         </div>

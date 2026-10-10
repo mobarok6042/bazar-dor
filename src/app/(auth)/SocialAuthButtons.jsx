@@ -17,15 +17,15 @@ const GithubIcon = () => (
 
 const SocialAuthButtons = ({ onGoogleSignIn, onGithubSignIn }) => (
   <>
-    <div className="divider my-1 text-sm text-base-content/50">or continue with</div>
+    <div className="divider my-1 text-sm text-base-content/70">অথবা এভাবে চালিয়ে যান</div>
     <div className="grid gap-3 sm:grid-cols-2">
-      <button type="button" onClick={onGoogleSignIn} className="btn btn-outline w-full">
+      <button type="button" onClick={onGoogleSignIn} className="btn btn-outline w-full border-2 border-base-content/40 font-semibold hover:border-[#047F39] hover:bg-[#047F39] hover:text-white">
         <GoogleIcon />
-        Google
+        গুগল
       </button>
-      <button type="button" onClick={onGithubSignIn} className="btn btn-outline w-full">
+      <button type="button" onClick={onGithubSignIn} className="btn btn-outline w-full border-2 border-base-content/40 font-semibold hover:border-[#047F39] hover:bg-[#047F39] hover:text-white">
         <GithubIcon />
-        GitHub
+        গিটহাব
       </button>
     </div>
   </>

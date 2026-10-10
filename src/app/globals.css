@@ -2,6 +2,10 @@
 @plugin "daisyui";
 @import "@heroui/styles"; 
 
+[data-rht-toaster] {
+  z-index: 9999;
+}
+
 @keyframes product-marquee-scroll {
   to {
     transform: translateX(-50%);

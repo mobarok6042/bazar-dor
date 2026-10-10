@@ -1,6 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+export const metadata = {
+    title: 'বাজারদর পরিচিতি',
+};
+
 const BannerPage = () => {
     return (
         <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">

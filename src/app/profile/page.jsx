@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { updateUser, useSession } from "@/lib/auth-client";
 
 const ProfileForm = ({ user }) => {
@@ -17,7 +18,9 @@ const ProfileForm = ({ user }) => {
 
     const updatedName = name.trim();
     if (!updatedName) {
-      setErrorMessage("Please enter your name.");
+      const message = "আপনার নাম লিখুন।";
+      setErrorMessage(message);
+      toast.error(message);
       return;
     }
 
@@ -27,13 +30,19 @@ const ProfileForm = ({ user }) => {
       const { error } = await updateUser({ name: updatedName });
 
       if (error) {
-        setErrorMessage(error.message || "Unable to update your name.");
+        const message = "নাম পরিবর্তন করা যায়নি। আবার চেষ্টা করুন।";
+        setErrorMessage(message);
+        toast.error(message);
         return;
       }
 
-      setSuccessMessage("Your name has been updated.");
+      const message = "আপনার নাম পরিবর্তন করা হয়েছে।";
+      setSuccessMessage(message);
+      toast.success(message);
     } catch {
-      setErrorMessage("Unable to update your name. Please try again.");
+      const message = "নাম পরিবর্তন করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।";
+      setErrorMessage(message);
+      toast.error(message);
     } finally {
       setIsSaving(false);
     }
@@ -43,13 +52,13 @@ const ProfileForm = ({ user }) => {
     <main className="mx-auto w-full max-w-xl px-4 py-12 sm:px-6">
       <section className="card border border-base-300 bg-base-100 shadow-xl">
         <div className="card-body p-6 sm:p-8">
-          <h1 className="text-3xl font-bold">Your profile</h1>
+          <h1 className="text-3xl font-bold">আপনার প্রোফাইল</h1>
           <p className="text-sm text-base-content/65">
-            Update your profile name. Your email address cannot be changed here.
+            আপনার প্রোফাইলের নাম পরিবর্তন করুন। এখান থেকে ইমেইল ঠিকানা পরিবর্তন করা যাবে না।
           </p>
           <form className="mt-4 flex flex-col gap-4" onSubmit={handleSubmit}>
             <label className="form-control w-full">
-              <span className="label-text mb-2">Name</span>
+              <span className="label-text mb-2">নাম</span>
               <input
                 className="input input-bordered w-full"
                 name="name"
@@ -62,15 +71,15 @@ const ProfileForm = ({ user }) => {
               />
             </label>
             <div className="form-control w-full">
-              <span className="label-text mb-2">Email</span>
+              <span className="label-text mb-2">ইমেইল</span>
               <p className="rounded-lg border border-base-300 bg-base-200 px-4 py-3 text-base-content/70">
                 {user.email}
               </p>
             </div>
             {errorMessage && <p role="alert" className="text-sm text-error">{errorMessage}</p>}
             {successMessage && <p role="status" className="text-sm text-success">{successMessage}</p>}
-            <button type="submit" className="btn w-full bg-[#047F39] text-white" disabled={isSaving}>
-              {isSaving ? "Saving..." : "Save name"}
+            <button type="submit" className="btn w-full bg-[#047F39] font-semibold text-white hover:bg-[#035f2b]" disabled={isSaving}>
+              {isSaving ? "সংরক্ষণ হচ্ছে..." : "নাম সংরক্ষণ করুন"}
             </button>
           </form>
         </div>
@@ -89,9 +98,9 @@ const ProfilePage = () => {
   if (!session?.user) {
     return (
       <main className="mx-auto w-full max-w-xl px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold">Sign in to view your profile</h1>
-        <Link href="/sign-in" className="btn mt-5 bg-[#047F39] text-white">
-          Sign In
+        <h1 className="text-2xl font-bold">প্রোফাইল দেখতে সাইন ইন করুন</h1>
+        <Link href="/sign-in" className="btn mt-5 bg-[#047F39] font-semibold text-white hover:bg-[#035f2b]">
+          সাইন ইন
         </Link>
       </main>
     );

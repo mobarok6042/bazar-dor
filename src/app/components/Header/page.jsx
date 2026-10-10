@@ -8,6 +8,10 @@ import NavlinksPage from '../page';
 import MarqueePage from '../Marquee/page';
 import AccountMenu from './AccountMenu';
 
+export const metadata = {
+    title: 'শিরোনাম',
+};
+
 const CurrentDate = async () => {
     await connection();
 

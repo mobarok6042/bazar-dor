@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { signOut, useSession } from "@/lib/auth-client";
 
 const AccountMenu = () => {
@@ -15,10 +16,16 @@ const AccountMenu = () => {
     try {
       const { error } = await signOut();
       if (error) {
-        setErrorMessage(error.message || "Unable to sign out. Please try again.");
+        const message = "সাইন আউট করা যায়নি। আবার চেষ্টা করুন।";
+        setErrorMessage(message);
+        toast.error(message);
+      } else {
+        toast.success("সফলভাবে সাইন আউট হয়েছে।");
       }
     } catch {
-      setErrorMessage("Unable to sign out. Please try again.");
+      const message = "সাইন আউট করা যায়নি। আবার চেষ্টা করুন।";
+      setErrorMessage(message);
+      toast.error(message);
     }
   };
 
@@ -28,12 +35,12 @@ const AccountMenu = () => {
 
   if (!user) {
     return (
-      <nav aria-label="Account" className="flex items-center justify-end gap-2 sm:gap-3">
-        <Link href="/sign-in" className="btn btn-outline">
-          Sign In
+      <nav aria-label="অ্যাকাউন্ট" className="flex items-center justify-end gap-2 sm:gap-3">
+        <Link href="/sign-in" className="btn border-2 border-[#047F39] font-semibold text-[#006b2f] hover:bg-[#047F39] hover:text-white">
+          সাইন ইন
         </Link>
-        <Link href="/sign-up" className="btn bg-[#047F39] text-white">
-          Sign Up
+        <Link href="/sign-up" className="btn bg-[#047F39] font-semibold text-white hover:bg-[#035f2b]">
+          নিবন্ধন
         </Link>
       </nav>
     );
@@ -52,7 +59,7 @@ const AccountMenu = () => {
       <Link
         href="/profile"
         className="flex max-w-56 items-center gap-2 rounded-full p-1 pr-3 transition-colors hover:bg-base-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#047F39]"
-        aria-label={`Open profile for ${user.name || user.email}`}
+        aria-label={`${user.name || user.email}-এর প্রোফাইল খুলুন`}
       >
         {user.image ? (
           <Image
@@ -89,21 +96,21 @@ const AccountMenu = () => {
               </span>
             )}
             <div className="min-w-0">
-              <p className="truncate font-semibold">{user.name || "User"}</p>
+              <p className="truncate font-semibold">{user.name || "ব্যবহারকারী"}</p>
               <p className="truncate text-sm text-base-content/65">{user.email}</p>
             </div>
           </div>
           <div className="flex flex-col gap-1 border-t border-base-300 pt-3">
             {errorMessage && <p role="alert" className="px-3 py-2 text-sm text-error">{errorMessage}</p>}
-            <Link href="/profile" className="btn btn-ghost justify-start">
-              Profile
+            <Link href="/profile" className="btn btn-ghost justify-start font-semibold text-[#006b2f] hover:bg-[#e6f4eb]">
+              প্রোফাইল
             </Link>
             <button
               type="button"
-              className="btn btn-ghost justify-start text-error"
+              className="btn btn-ghost justify-start font-semibold text-error"
               onClick={handleSignOut}
             >
-              Sign out
+              সাইন আউট
             </button>
           </div>
         </div>

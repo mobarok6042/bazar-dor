@@ -1,6 +1,11 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "পণ্যের বিস্তারিত",
+  description: "পণ্যের বাজারভিত্তিক দাম ও মূল্যসারাংশ দেখুন।",
+};
+
 const ProductDetails = async ({ params }) => {
   const { slug } = await params;
   const response = await fetch(
@@ -72,7 +77,7 @@ const ProductDetails = async ({ params }) => {
             <div>
               <h1 className="text-2xl font-bold sm:text-3xl">{product.nameBn}</h1>
               <p className="mt-1 text-base-content/70">
-                {product.categoryNameBn} · per {product.unit}
+                {product.categoryNameBn} · প্রতি {product.unit}
               </p>
               <p className={`mt-2 text-sm ${changeColor}`}>
                 গতকালের তুলনায় {difference > 0 ? "+" : difference < 0 ? "-" : ""}৳{Math.abs(difference)}

@@ -2,6 +2,11 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import CategoryProductList from "../components/Products/CategoryProductList";
 
+export const metadata = {
+  title: "পণ্যের বিভাগ",
+  description: "বিভাগ অনুযায়ী পণ্যের দাম দেখুন ও সাজান।",
+};
+
 const CategoryContent = async ({ params }) => {
   const { category: categorySlug } = await params;
   const [categoriesResponse, productsResponse] = await Promise.all([

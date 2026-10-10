@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
           )}
           <h3 className="min-w-0">{product.nameBn}</h3>
         </div>
-        <p className="text-sm text-base-content/70">per {product.unit}</p>
+        <p className="text-sm text-base-content/70">প্রতি {product.unit}</p>
         <div className="mt-1 flex items-baseline gap-2">
           <span className="text-sm text-base-content/60">আজকের দাম</span>
           <span className="text-lg font-semibold tabular-nums">

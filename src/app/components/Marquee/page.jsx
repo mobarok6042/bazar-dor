@@ -1,5 +1,9 @@
 import { Suspense } from 'react';
 
+export const metadata = {
+    title: 'আজকের বাজারদর সংক্ষিপ্ত তালিকা',
+};
+
 const ProductMarquee = async () => {
     const response = await fetch("https://api.abcz.workers.dev/api/bazardor/products");
 

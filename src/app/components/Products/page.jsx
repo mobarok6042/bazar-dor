@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import ProductCard from "./ProductCard";
 
+export const metadata = {
+  title: "সব পণ্য",
+};
+
 const ProductGroup = ({ title, products, id }) =>
   products.length > 0 && (
     <section aria-label={title} id={id} className={id ? "scroll-mt-6" : undefined}>
@@ -61,7 +65,7 @@ const ProductCards = async () => {
         <ProductGroup title="আজ দাম কমেছে" products={decreasedProducts} />
       </section>
       <ProductGroup
-        title={`মত (${products.length}টি) পন্য দেখানো হচ্ছে`}
+        title={`মোট ${products.length}টি পণ্য`}
         products={products}
         id="all-products"
       />

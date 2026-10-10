@@ -26,7 +26,7 @@ const CategoryProductList = ({ category, products }) => {
             {category.nameBn}
           </h1>
           <p className="mt-1 text-sm text-base-content/70">
-            {category.nameBn} জাতীয় {products.length}টি পণ্যের আজকের দাম ও পরিবরতন
+            {category.nameBn} বিভাগের {products.length}টি পণ্যের আজকের দাম ও পরিবর্তন
           </p>
         </div>
         <label className="form-control w-full sm:w-auto">

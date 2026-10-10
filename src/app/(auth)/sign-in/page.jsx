@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import {
   Button,
   FieldError,
@@ -14,38 +16,58 @@ import { signIn } from "@/lib/auth-client";
 import SocialAuthButtons from "../SocialAuthButtons";
 
 const SignInPage = () => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("required") === "product") {
+      toast("বিস্তারিত দেখতে আগে সাইন ইন করুন।");
+      params.delete("required");
+      const query = params.toString();
+      window.history.replaceState(
+        window.history.state,
+        "",
+        `${window.location.pathname}${query ? `?${query}` : ""}`,
+      );
+    }
+  }, []);
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setErrorMessage("");
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
+    const callbackURL = getSafeCallbackURL();
 
     try {
       const { error } = await signIn.email({
         email: data.email,
         password: data.password,
         rememberMe: true,
+        callbackURL,
       });
 
       if (error) {
-        setErrorMessage(error.message || "Unable to sign in with those credentials.");
+        toast.error("ইমেইল বা পাসওয়ার্ড সঠিক নয়। আবার চেষ্টা করুন।");
+        return;
       }
+      toast.success("সফলভাবে সাইন ইন হয়েছে।");
+      router.push(callbackURL);
     } catch {
-      setErrorMessage("Unable to sign in. Please try again.");
+      toast.error("সাইন ইন করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।");
     }
   };
 
   const handleSocialSignIn = async (provider) => {
-    setErrorMessage("");
     try {
-      const { error } = await signIn.social({ provider });
+      const { error } = await signIn.social({
+        provider,
+        callbackURL: getSafeCallbackURL(),
+      });
       if (error) {
-        setErrorMessage(error.message || `Unable to continue with ${provider}.`);
+        toast.error("সামাজিক অ্যাকাউন্ট দিয়ে চালিয়ে যাওয়া যায়নি। আবার চেষ্টা করুন।");
       }
     } catch {
-      setErrorMessage(`Unable to continue with ${provider}. Please try again.`);
+      toast.error("সামাজিক অ্যাকাউন্ট দিয়ে চালিয়ে যাওয়া যায়নি। আবার চেষ্টা করুন।");
     }
   };
 
@@ -54,9 +76,9 @@ const SignInPage = () => {
       <section className="card w-full max-w-md border border-base-300 bg-base-100 shadow-xl">
         <div className="card-body gap-5 p-6 sm:p-8">
           <div className="text-center">
-            <h1 className="text-3xl font-bold tracking-tight">Welcome back</h1>
+            <h1 className="text-3xl font-bold tracking-tight">আবার স্বাগতম</h1>
             <p className="mt-2 text-sm text-base-content/65">
-              Sign in to your Bazar Dor account.
+              আপনার বাজার দর অ্যাকাউন্টে সাইন ইন করুন।
             </p>
           </div>
 
@@ -68,21 +90,20 @@ const SignInPage = () => {
               validate={(value) =>
                 /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
                   ? null
-                  : "Please enter a valid email address"
+                  : "সঠিক ইমেইল ঠিকানা লিখুন"
               }
             >
-              <Label>Email</Label>
-              <Input autoComplete="email" placeholder="john@example.com" />
+              <Label>ইমেইল</Label>
+              <Input autoComplete="email" placeholder="আপনার ইমেইল লিখুন" />
               <FieldError />
             </TextField>
             <TextField isRequired name="password" type="password">
-              <Label>Password</Label>
-              <Input autoComplete="current-password" placeholder="Enter your password" />
+              <Label>পাসওয়ার্ড</Label>
+              <Input autoComplete="current-password" placeholder="আপনার পাসওয়ার্ড লিখুন" />
               <FieldError />
             </TextField>
-            {errorMessage && <p role="alert" className="text-sm text-error">{errorMessage}</p>}
-            <Button type="submit" className="w-full">
-              Sign in
+            <Button type="submit" className="w-full bg-[#047F39] font-semibold text-white hover:bg-[#035f2b]">
+              সাইন ইন করুন
             </Button>
           </Form>
 
@@ -91,16 +112,23 @@ const SignInPage = () => {
             onGithubSignIn={() => handleSocialSignIn("github")}
           />
 
-          <p className="text-center text-sm text-base-content/70">
-            New to this site?{" "}
-            <Link href="/sign-up" className="font-semibold text-[#047F39] hover:underline">
-              Sign up
+          <p className="text-center text-sm text-base-content">
+            এই সাইটে নতুন?{" "}
+            <Link href="/sign-up" className="font-bold text-[#006b2f] underline decoration-2 underline-offset-4 hover:text-[#004d22]">
+              নিবন্ধন করুন
             </Link>
           </p>
         </div>
       </section>
     </main>
   );
+};
+
+const getSafeCallbackURL = () => {
+  const callbackURL = new URLSearchParams(window.location.search).get("callbackURL");
+  return callbackURL?.startsWith("/") && !callbackURL.startsWith("//")
+    ? callbackURL
+    : "/";
 };
 
 export default SignInPage;

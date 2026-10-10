@@ -1,6 +1,10 @@
 import { Suspense } from 'react';
 import CategoryNavLinks from './CategoryNavLinks';
 
+export const metadata = {
+    title: 'পণ্যের বিভাগসমূহ',
+};
+
 const CategoryLinks = async () => {
     const response = await fetch("https://api.abcz.workers.dev/api/bazardor/categories");
 
@@ -24,7 +28,7 @@ const CategoryLinks = async () => {
 };
 
 const NavlinksPage = () => (
-    <Suspense fallback={<nav aria-label="Categories" className="h-8" />}>
+    <Suspense fallback={<nav aria-label="পণ্যের বিভাগ" className="h-8" />}>
         <CategoryLinks />
     </Suspense>
 );
