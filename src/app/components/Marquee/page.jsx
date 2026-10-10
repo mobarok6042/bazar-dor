@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 const ProductMarquee = async () => {
-    const response = await fetch("https://api.api-store.workers.dev/api/bazardor/products");
+    const response = await fetch("https://api.abcz.workers.dev/api/bazardor/products");
 
     if (!response.ok) {
         throw new Error(`Failed to load products: ${response.status} ${response.statusText}`);

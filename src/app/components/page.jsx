@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import CategoryNavLinks from './CategoryNavLinks';
 
 const CategoryLinks = async () => {
-    const response = await fetch("https://api.api-store.workers.dev/api/bazardor/categories");
+    const response = await fetch("https://api.abcz.workers.dev/api/bazardor/categories");
 
     if (!response.ok) {
         throw new Error(`Failed to load categories: ${response.status} ${response.statusText}`);

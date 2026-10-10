@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@import "@heroui/styles"; 
 
 @keyframes product-marquee-scroll {
   to {
