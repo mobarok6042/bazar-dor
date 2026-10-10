@@ -82,7 +82,7 @@ const SignInPage = () => {
             </p>
           </div>
 
-          <Form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
+          <Form className="auth-form flex w-full flex-col gap-4" onSubmit={onSubmit}>
             <TextField
               isRequired
               name="email"

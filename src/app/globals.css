@@ -2,6 +2,28 @@
 @plugin "daisyui";
 @import "@heroui/styles"; 
 
+.auth-form label {
+  color: #111827;
+  font-weight: 600;
+}
+
+.auth-form input {
+  color: #111827;
+  background-color: #fff;
+  border-color: #9ca3af;
+}
+
+.auth-form input::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+.auth-form input:focus {
+  border-color: #047f39;
+  outline: 2px solid #047f39;
+  outline-offset: 1px;
+}
+
 [data-rht-toaster] {
   z-index: 9999;
 }
