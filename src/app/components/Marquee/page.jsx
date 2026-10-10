@@ -5,7 +5,7 @@ export const metadata = {
 };
 
 const ProductMarquee = async () => {
-    const response = await fetch("https://api.abcz.workers.dev/api/bazardor/products");
+    const response = await fetch("https://openapi.programming-hero.com/api/bazardor/products");
 
     if (!response.ok) {
         throw new Error(`Failed to load products: ${response.status} ${response.statusText}`);

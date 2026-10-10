@@ -11,8 +11,8 @@ export const metadata = {
 const CategoryContent = async ({ params }) => {
   const { category: categorySlug } = await params;
   const [categoriesResponse, productsResponse] = await Promise.all([
-    fetch("https://api.abcz.workers.dev/api/bazardor/categories"),
-    fetch("https://api.abcz.workers.dev/api/bazardor/products"),
+    fetch("https://openapi.programming-hero.com/api/bazardor/categories"),
+    fetch("https://openapi.programming-hero.com/api/bazardor/products"),
   ]);
 
   if (!categoriesResponse.ok) {

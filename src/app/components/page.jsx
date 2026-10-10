@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 const CategoryLinks = async () => {
-    const response = await fetch("https://api.abcz.workers.dev/api/bazardor/categories");
+    const response = await fetch("https://openapi.programming-hero.com/api/bazardor/categories");
 
     if (!response.ok) {
         throw new Error(`Failed to load categories: ${response.status} ${response.statusText}`);
