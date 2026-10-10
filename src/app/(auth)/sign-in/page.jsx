@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -13,10 +13,12 @@ import {
   TextField,
 } from "@heroui/react";
 import { signIn } from "@/lib/auth-client";
+import PasswordVisibilityToggle from "../PasswordVisibilityToggle";
 import SocialAuthButtons from "../SocialAuthButtons";
 
 const SignInPage = () => {
   const router = useRouter();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -97,9 +99,23 @@ const SignInPage = () => {
               <Input autoComplete="email" placeholder="আপনার ইমেইল লিখুন" />
               <FieldError />
             </TextField>
-            <TextField isRequired name="password" type="password">
+            <TextField
+              isRequired
+              name="password"
+            >
               <Label>পাসওয়ার্ড</Label>
-              <Input autoComplete="current-password" placeholder="আপনার পাসওয়ার্ড লিখুন" />
+              <div className="relative w-full">
+                <Input
+                  autoComplete="current-password"
+                  className="password-input"
+                  placeholder="আপনার পাসওয়ার্ড লিখুন"
+                  type={isPasswordVisible ? "text" : "password"}
+                />
+                <PasswordVisibilityToggle
+                  isVisible={isPasswordVisible}
+                  onToggle={() => setIsPasswordVisible((visible) => !visible)}
+                />
+              </div>
               <FieldError />
             </TextField>
             <Button type="submit" className="w-full bg-[#047F39] font-semibold text-white hover:bg-[#035f2b]">

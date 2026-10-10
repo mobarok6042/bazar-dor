@@ -13,6 +13,10 @@
   border-color: #9ca3af;
 }
 
+.auth-form .password-input {
+  padding-right: 3rem;
+}
+
 .auth-form input::placeholder {
   color: #6b7280;
   opacity: 1;

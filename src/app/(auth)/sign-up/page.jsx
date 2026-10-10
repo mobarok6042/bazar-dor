@@ -13,10 +13,12 @@ import {
   TextField,
 } from "@heroui/react";
 import { signIn, signUp } from "@/lib/auth-client";
+import PasswordVisibilityToggle from "../PasswordVisibilityToggle";
 import SocialAuthButtons from "../SocialAuthButtons";
 
 const SignUpPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -96,7 +98,6 @@ const SignUpPage = () => {
               isRequired
               minLength={8}
               name="password"
-              type="password"
               validate={(value) => {
                 if (value.length < 8) return "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে";
                 if (!/[A-Z]/.test(value)) return "পাসওয়ার্ডে অন্তত একটি বড় হাতের ইংরেজি অক্ষর থাকতে হবে";
@@ -105,7 +106,18 @@ const SignUpPage = () => {
               }}
             >
               <Label>পাসওয়ার্ড</Label>
-              <Input autoComplete="new-password" placeholder="পাসওয়ার্ড তৈরি করুন" />
+              <div className="relative w-full">
+                <Input
+                  autoComplete="new-password"
+                  className="password-input"
+                  placeholder="পাসওয়ার্ড তৈরি করুন"
+                  type={isPasswordVisible ? "text" : "password"}
+                />
+                <PasswordVisibilityToggle
+                  isVisible={isPasswordVisible}
+                  onToggle={() => setIsPasswordVisible((visible) => !visible)}
+                />
+              </div>
               <Description>
                 কমপক্ষে ৮ অক্ষর, একটি বড় হাতের ইংরেজি অক্ষর ও একটি সংখ্যা দিন।
               </Description>
