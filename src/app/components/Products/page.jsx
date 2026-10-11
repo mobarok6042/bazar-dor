@@ -62,11 +62,11 @@ const ProductCards = async () => {
   return (
     <div className="space-y-10">
       <section aria-label="সবচেয়ে বেশি দামের পরিবর্তন" className="space-y-8">
-        <ProductGroup title="আজ দাম বেরছে" products={increasedProducts} />
+        <ProductGroup title="আজ দাম বেড়েছে" products={increasedProducts} />
         <ProductGroup title="আজ দাম কমেছে" products={decreasedProducts} />
       </section>
       <ProductGroup
-        title={`মোট ${products.length}টি পণ্য`}
+        title={`মোট ${products.length}টি পণ্য দেখানো হচ্ছে`}
         products={products}
         id="all-products"
       />
